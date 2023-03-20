@@ -13,6 +13,7 @@ public class Application {
         // SELECT * FROM employees ORDER BY full_name
 
         // C2: lay toan bo danh sach -> su dung Stream sap xep??
+        System.out.println("Ánh");
         List<Employee> employeeList = employeeDAO.getAll();
 
         employeeList.stream()
