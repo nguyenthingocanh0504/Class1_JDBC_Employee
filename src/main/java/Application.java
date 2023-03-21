@@ -9,7 +9,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
+import service.AuthenService;
 public class Application {
+    private static boolean isLoginSuccess = false;
+    private static AuthenService authenService = new AuthenService();
+    private static void showMenu(){
+        System.out.println("---QUAN LY NHAN SU---");
+    }
+
     private static PhongBanDAO phongBanDAO = new PhongBanDAO();
     private static NhanVienDAO nhanVienDAO = new NhanVienDAO();
     private static void mainMenu() {
@@ -67,6 +74,27 @@ public class Application {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
+        if(isLoginSuccess== false){
+            // Dang nhap truoc
+            System.out.print("Nhap username: ");
+            String username = in.nextLine();
+            System.out.print("Nhap password: ");
+            String password = in.nextLine();
+
+            // Kiem tra xem dang nhap dc ko?
+            AuthenService authenService = new AuthenService();
+            isLoginSuccess = authenService.login(username, password);
+        }
+
+        if(isLoginSuccess == false){
+            System.out.println("Dang nhap that bai");
+            System.exit(0);
+        }
+
+        // Dang nhap thanh cong
+        showMenu();
+
+        in.close();
         int option = -1;
 
         do {
