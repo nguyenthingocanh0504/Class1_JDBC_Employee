@@ -1,15 +1,15 @@
 package model;
 
 public class NhanVien {
-    private int maNV;
+    private String maNV;
     private String hoTen;
     private String sdt;
     private String gioiTinh;
     private String ngaySinh;
     private String danToc;
     private String queQuan;
-    private int maPB;
-    private int maTDHV;
+    private long maPB;
+    private long maTDHV;
     private int bacLuong;
     private int maCV;
     private int trangThaiNV;
@@ -17,7 +17,7 @@ public class NhanVien {
     public NhanVien() {
     }
 
-    public NhanVien(int maNV, String hoTen, String sdt, String gioiTinh, String ngaySinh, String danToc, String queQuan, int maPB, int maTDHV, int bacLuong, int maCV, int trangThaiNV) {
+    public NhanVien(String maNV, String hoTen, String sdt, String gioiTinh, String ngaySinh, String danToc, String queQuan, long maPB, long maTDHV, int bacLuong, int maCV, int trangThaiNV) {
         this.maNV = maNV;
         this.hoTen = hoTen;
         this.sdt = sdt;
@@ -32,11 +32,11 @@ public class NhanVien {
         this.trangThaiNV = trangThaiNV;
     }
 
-    public int getMaNV() {
+    public String getMaNV() {
         return maNV;
     }
 
-    public void setMaNV(int maNV) {
+    public void setMaNV(String maNV) {
         this.maNV = maNV;
     }
 
@@ -88,19 +88,19 @@ public class NhanVien {
         this.queQuan = queQuan;
     }
 
-    public int getMaPB() {
+    public long getMaPB() {
         return maPB;
     }
 
-    public void setMaPB(int maPB) {
+    public void setMaPB(long maPB) {
         this.maPB = maPB;
     }
 
-    public int getMaTDHV() {
+    public long getMaTDHV() {
         return maTDHV;
     }
 
-    public void setMaTDHV(int maTDHV) {
+    public void setMaTDHV(long maTDHV) {
         this.maTDHV = maTDHV;
     }
 

@@ -1,9 +1,6 @@
-import dao.EmployeeDAO;
-import dao.NhanVienDAO;
-import dao.PhongBanDAO;
-import model.Employee;
-import model.NhanVien;
-import model.PhongBan;
+import Function.IsSoDienThoai;
+import dao.*;
+import model.*;
 
 import java.util.Comparator;
 import java.util.List;
@@ -13,10 +10,9 @@ import service.AuthenService;
 public class Application {
     private static boolean isLoginSuccess = false;
     private static AuthenService authenService = new AuthenService();
-    private static void showMenu(){
-        System.out.println("---QUAN LY NHAN SU---");
-    }
-
+    private static LuongDAO luongDAO = new LuongDAO();
+    private static TrinhDoHocVanDAO trinhDoHocVanDAO = new TrinhDoHocVanDAO();
+    private static ChucVuDAO chucVuDAO = new ChucVuDAO();
     private static PhongBanDAO phongBanDAO = new PhongBanDAO();
     private static NhanVienDAO nhanVienDAO = new NhanVienDAO();
     private static void mainMenu() {
@@ -25,25 +21,23 @@ public class Application {
         System.out.println("2. Hiển thị danh sách toàn bộ nhân viên");
         System.out.println("3. Thêm mới thông tin 1 phòng ban");
         System.out.println("4. Cập nhật thông tin phòng ban (theo mã phòng ban)");
-        System.out.println("5. Thêm mới thông tin 1 chức vụ");
-        System.out.println("6. Cập nhật thông tin chức vụ");
-        System.out.println("7. Xóa thông tin phòng ban (theo mã PB)");
-        System.out.println("8. Thêm mới thông tin 1 Nhân Viên");
-        System.out.println("9. Cập nhật thông tin 1 nhân viên (theo mã NV)");
-        System.out.println("10. Xóa thông tin 1 nhân viên (theo mã NV)");
-        System.out.println("11. Tìm kiếm thông tin 1 nhân viên ( theo mã, theo tên,...)");
-        System.out.println("12. Thêm thông tin nhân viên vào 1 phòng ban");
-        System.out.println("13. Xóa thông tin nhân viên ra khỏi phòng ban");
-        System.out.println("14. Chuyển vị trí phòng ban cho 1 nhân viên");
-        System.out.println("15. Tính thuế thu nhập cá nhân cho 1 nhân viên (theo mã NV)");
-        System.out.println("16. Sắp xếp danh sách nhân viên theo mức lương thực lĩnh");
-        System.out.println("17. Lấy ra những nhân viên có quê quán ở Hà Nội");
-        System.out.println("18. Lấy ra 5 nhân viên có bậc lương cao nhất.");
-        System.out.println("19. Thoát");
+        System.out.println("5. Xóa thông tin phòng ban (theo mã PB)");
+        System.out.println("6. Thêm mới thông tin 1 Nhân Viên");
+        System.out.println("7. Cập nhật thông tin 1 nhân viên (theo mã NV)");
+        System.out.println("8. Xóa thông tin 1 nhân viên (theo mã NV)");
+        System.out.println("9. Tìm kiếm thông tin 1 nhân viên ( theo mã, theo tên,...)");
+        System.out.println("10. Thêm thông tin nhân viên vào 1 phòng ban");
+        System.out.println("11. Xóa thông tin nhân viên ra khỏi phòng ban");
+        System.out.println("12. Chuyển vị trí phòng ban cho 1 nhân viên");
+        System.out.println("13. Tính thuế thu nhập cá nhân cho 1 nhân viên (theo mã NV)");
+        System.out.println("14. Sắp xếp danh sách nhân viên theo mức lương thực lĩnh");
+        System.out.println("15. Lấy ra những nhân viên có quê quán ở Hà Nội");
+        System.out.println("16. Lấy ra 5 nhân viên có bậc lương cao nhất.");
+        System.out.println("17. Thoát");
     }
     private static void option1() {
         List<PhongBan> phongBanList = phongBanDAO.getAll();
-        System.out.printf("%-20s %-20s %-20s %-20s", "Mã phòng ban", "Tên sản phẩm", "Số điện thoại", "Địa chỉ");
+        System.out.printf("%-20s %-20s %-20s %-20s", "Mã phòng ban", "Tên phòng ban", "Số điện thoại", "Địa chỉ");
         System.out.println();
         for (int i = 0; i < phongBanList.size(); i++) {
             PhongBan p = phongBanList.get(i);
@@ -56,7 +50,7 @@ public class Application {
         System.out.println();
         for (int i = 0; i < nhanVienList.size(); i++) {
             NhanVien n = nhanVienList.get(i);
-            System.out.printf("%-20d %-20s %-20s %-20s %-20s %-20s %-20s\n", n.getMaNV(), n.getHoTen(), n.getSdt(), n.getGioiTinh(),n.getNgaySinh(),n.getDanToc(),n.getQueQuan());
+            System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-20s\n", n.getMaNV(), n.getHoTen(), n.getSdt(), n.getGioiTinh(),n.getNgaySinh(),n.getDanToc(),n.getQueQuan());
         };
     }
     private static void option3(Scanner in){
@@ -70,6 +64,99 @@ public class Application {
         p.setTrangThai(1);
 
         phongBanDAO.insert(p);
+    }
+
+    private static void option4(Scanner in){
+        PhongBan p=new PhongBan();
+        System.out.print("\tNhập mã phòng ban: ");
+        int MaPB = Integer.parseInt(in.nextLine());
+        p.setMaPB(MaPB);
+        System.out.print("\tNhập tên phòng ban: ");
+        String TenPB = in.nextLine();
+        p.setTenPB(TenPB);
+        System.out.print("\tNhập số điện thoại: ");
+        String sdt=in.nextLine();
+        p.setSdtPB(sdt);
+        System.out.print("\tNhập địa chỉ: ");
+        String diaChi=in.nextLine();
+        p.setDiaChi(diaChi);
+        p.setTrangThai(1);
+        phongBanDAO.update(p,MaPB);
+    }
+    private static void option5(Scanner in){
+        PhongBan p=new PhongBan();
+        System.out.print("\tNhập mã phòng ban: ");
+        int MaPB = Integer.parseInt(in.nextLine());
+        p.setMaPB(MaPB);
+
+        phongBanDAO.update(p,MaPB);
+    }
+
+    private static void option6(Scanner in){
+        NhanVien n = new NhanVien();
+        String MaNV;
+        do {
+            System.out.print("\tNhập mã nhân viên: ");
+            MaNV = in.nextLine();
+        }
+        while (nhanVienDAO.getById(MaNV)!=null);
+        n.setMaNV(MaNV);
+        System.out.print("\tNhập tên nhân viên: ");
+        n.setHoTen(in.nextLine());
+        String sdt;
+        IsSoDienThoai isSoDienThoai=new IsSoDienThoai();
+        do {
+            System.out.print("\tNhập số điện tho: ");
+            sdt = in.nextLine();
+        }while (isSoDienThoai.isSoDienThoai(sdt)==false);
+        n.setSdt(sdt);
+
+        System.out.print("\tNhập giới tính: ");
+        n.setGioiTinh(in.nextLine());
+        System.out.print("\tNhập ngày sinh: ");
+        n.setNgaySinh(in.nextLine());
+        System.out.print("\tNhập dân tộc: ");
+        n.setDanToc(in.nextLine());
+        System.out.print("\tNhập quê quán: ");
+        n.setQueQuan(in.nextLine());
+        System.out.println("\tChọn phòng ban: ");
+        List<PhongBan> phongBanList = phongBanDAO.getAll();
+        for (int i = 0; i < phongBanList.size(); i++) {
+            System.out.printf("\t\t%-20d %-20s \n", phongBanList.get(i).getMaPB(), phongBanList.get(i).getTenPB());
+        }
+        // Tam thoi nhap chinh xac
+//        long MaPB =  phongBanList.get(Integer.parseInt(in.nextLine())).getMaPB();
+        n.setMaPB(Integer.parseInt(in.nextLine()));
+
+        System.out.println("\tChọn trình độ học vấn: ");
+        List<TrinhDoHocVan> trinhDoHocVanList = trinhDoHocVanDAO.getAll();
+        for (int i = 0; i < trinhDoHocVanList.size(); i++) {
+            System.out.printf("\t\t%-20d %-20s \n", trinhDoHocVanList.get(i).getMaTDHV(), trinhDoHocVanList.get(i).getTTDHV());
+        }
+        // Tam thoi nhap chinh xac
+//        long MaTDHV =  trinhDoHocVanList.get(Integer.parseInt(in.nextLine())).getMaTDHV();
+        n.setMaTDHV(Integer.parseInt(in.nextLine()));
+
+        System.out.println("Chọn lương:");
+        List<Luong> luongList = luongDAO.getAll();
+        for (int i = 0; i < luongList.size(); i++) {
+            System.out.printf("\t\t%-20d %-20s \n", luongList.get(i).getBacLuong(), luongList.get(i).getLuongCB());
+        }
+        // Tam thoi nhap chinh xac
+//        int BacLuong =  luongList.get(Integer.parseInt(in.nextLine())).getBacLuong();
+        n.setBacLuong(Integer.parseInt(in.nextLine()));
+//
+        List<ChucVu> chucVuList = chucVuDAO.getAll();
+        for (int i = 0; i < chucVuList.size(); i++) {
+            System.out.printf("\t\t%-20d %-20s \n", chucVuList.get(i).getMaCV(), chucVuList.get(i).getTenCV());
+        }
+        // Tam thoi nhap chinh xac
+//        int ChucVu =  chucVuList.get(Integer.parseInt(in.nextLine())).getMaCV();
+        n.setMaCV(Integer.parseInt(in.nextLine()));
+
+        n.setTrangThaiNV(1);
+
+        nhanVienDAO.insert(n);
     }
 
     public static void main(String[] args) {
@@ -92,9 +179,7 @@ public class Application {
         }
 
         // Dang nhap thanh cong
-        showMenu();
 
-        in.close();
         int option = -1;
 
         do {
@@ -117,10 +202,13 @@ public class Application {
                     option3(in);
                     break;
                 case 4:
+                    option4(in);
                     break;
                 case 5:
+                    option5(in);
                     break;
                 case 6:
+                    option6(in);
                     break;
                 case 7:
                     break;
@@ -143,10 +231,6 @@ public class Application {
                 case 16:
                     break;
                 case 17:
-                    break;
-                case 18:
-                    break;
-                case 19:
                     break;
             }
 
