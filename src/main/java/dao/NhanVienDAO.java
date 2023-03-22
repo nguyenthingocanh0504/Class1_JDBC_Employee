@@ -11,7 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NhanVienDAO {
+public class NhanVienDAO implements GenerateClass{
     public List<NhanVien> getAll() {
         List<NhanVien> nhanVienList = new ArrayList<>();
 
@@ -48,26 +48,6 @@ public class NhanVienDAO {
             e.printStackTrace();
         }
         return nhanVienList;
-    }
-    public void insert(NhanVien e) {
-        final String sql = String.format("INSERT INTO NhanVien (`MaNV`,`HoTen`,`SoDienThoai`,`GioiTinh`,`NgaySinh`,`DanToc`,`QueQuan`,`MaPB`,`MaTrinhDoHocVan`,`BacLuong`,`MaCV`,`TrangThai`) VALUES ('%s','%s','%s','%s','%s','%s','%s','%d','%d','%d','%d','%d')",
-                e.getMaNV(), e.getHoTen(), e.getSdt(), e.getGioiTinh(), e.getNgaySinh(), e.getDanToc(),e.getQueQuan(),
-                e.getMaPB(),e.getMaTDHV(),e.getBacLuong(),e.getMaCV(),e.getTrangThaiNV()
-        );
-
-        try {
-            Connection conn = MyConnection.getConnection();
-            Statement stmt = conn.createStatement();
-
-            int rs = stmt.executeUpdate(sql);
-            if (rs == 0) {
-                System.out.println("Thêm thất bại!");
-            }
-            stmt.close();
-            conn.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
     public NhanVien getById(String id) {
         try {
@@ -148,5 +128,10 @@ public class NhanVienDAO {
         catch(Exception ex){
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public void insert(Object o) {
+        CommonSql.common_insert(o, CommonSql.INSERT_NHANVIEN);
     }
 }

@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhongBanDAO {
+public class PhongBanDAO implements GenerateClass {
     public List<PhongBan> getAll() {
         List<PhongBan> phongBanList = new ArrayList<>();
         // Bước 1: tạo kết nối
@@ -44,25 +44,6 @@ public class PhongBanDAO {
             e.printStackTrace();
         }
         return phongBanList;
-    }
-    public void insert(PhongBan e) {
-        final String sql = String.format("INSERT INTO PhongBan VALUES (NULL,'%s','%s','%s','%d')",
-                 e.getTenPB(), e.getSdtPB(), e.getDiaChi(), e.getTrangThai()
-        );
-
-        try {
-            Connection conn = MyConnection.getConnection();
-            Statement stmt = conn.createStatement();
-
-            int rs = stmt.executeUpdate(sql);
-            if (rs == 0) {
-                System.out.println("Thêm thất bại!");
-            }
-            stmt.close();
-            conn.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
     public PhongBan getById(int id) {
         try {
@@ -138,5 +119,10 @@ public class PhongBanDAO {
         catch(Exception ex){
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public void insert(Object o) {
+        CommonSql.common_insert(o, CommonSql.INSERT_PB);
     }
 }
