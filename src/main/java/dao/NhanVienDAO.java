@@ -3,6 +3,7 @@ package dao;
 import connection.MyConnection;
 import model.Employee;
 import model.NhanVien;
+import model.PhongBan;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -100,5 +101,52 @@ public class NhanVienDAO {
             e.printStackTrace();
         }
         return null;
+    }public void update(NhanVien e, String id) {
+        NhanVien tmp = getById(id);
+        if(tmp == null){
+            System.out.println("Không tồn tại nhân viên có id = " + id);
+            return;
+        }
+        final String sql = String.format("UPDATE NhanVien SET `HoTen`='%s',`SoDienThoai`='%s',`GioiTinh`='%s',`NgaySinh`='%s',`DanToc`='%s',`QueQuan`='%s' WHERE `MaNV`='%s' " ,
+                e.getHoTen(), e.getSdt(), e.getGioiTinh(), e.getNgaySinh(), e.getDanToc(), e.getQueQuan(), id
+        );
+
+        System.out.println(sql);
+        try{
+            Connection conn = MyConnection.getConnection();
+            Statement stmt = conn.createStatement();
+            long rs = stmt.executeUpdate(sql);
+
+            if (rs == 0) {
+                System.out.println("Cập nhật thất bại");
+            }
+
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+    public void delete(NhanVien e, String id) {
+        NhanVien tmp = getById(id);
+        if(tmp == null){
+            System.out.println("Không tồn tại nhân viên có id = " + id);
+            return;
+        }
+        final String sql = String.format("UPDATE NhanVien SET `TrangThai`='0' WHERE `MaNV`='%s' " , id);
+
+//        System.out.println(sql);
+        try{
+            Connection conn = MyConnection.getConnection();
+            Statement stmt = conn.createStatement();
+            long rs = stmt.executeUpdate(sql);
+
+            if (rs == 0) {
+                System.out.println("Xóa thất bại");
+            }
+
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
 }

@@ -131,7 +131,7 @@ public class PhongBanDAO {
             long rs = stmt.executeUpdate(sql);
 
             if (rs == 0) {
-                System.out.println("Cập nhật thất bại");
+                System.out.println("Xóa thất bại");
             }
 
         }

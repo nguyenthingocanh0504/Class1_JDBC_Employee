@@ -180,6 +180,45 @@ public class Application {
         nhanVienDAO.insert(n);
     }
 
+    private static void option7(Scanner in){
+        NhanVien n=new NhanVien();
+        System.out.print("\tNhập mã nhân viên: ");
+        String maNV=in.nextLine();
+        while(nhanVienDAO.getById(maNV)==null) {
+            System.out.print("\tMã nhân viên chưa tồn tại, vui lòng nhập lại mã NV: ");
+            maNV =in.nextLine();
+        }
+        n.setMaNV(maNV);
+
+        System.out.print("\tNhập tên nhân viên: ");
+        n.setHoTen(in.nextLine());
+        System.out.print("\tNhập số điện thoại: ");
+        String sdt = in.nextLine();
+        IsSoDienThoai isSoDienThoai=new IsSoDienThoai();
+        while (isSoDienThoai.isSoDienThoai(sdt)==false) {
+            System.out.print("\t\tNhập số điện thoại không đúng định dạng, vui lòng nhập lại sdt: ");
+            sdt = in.nextLine();
+        }
+        n.setSdt(sdt);
+
+        System.out.print("\tNhập giới tính: ");
+        n.setGioiTinh(in.nextLine());
+        System.out.print("\tNhập ngày sinh: ");
+        n.setNgaySinh(in.nextLine());
+        System.out.print("\tNhập dân tộc: ");
+        n.setDanToc(in.nextLine());
+        System.out.print("\tNhập quê quán: ");
+        n.setQueQuan(in.nextLine());
+        nhanVienDAO.update(n,maNV);
+    }
+    private static void option8(Scanner in){
+        NhanVien n=new NhanVien();
+        System.out.print("\tNhập mã nhân viên: ");
+        String maNV = in.nextLine();
+        n.setMaNV(maNV);
+
+        nhanVienDAO.delete(n,maNV);
+    }
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         if(isLoginSuccess== false){
@@ -232,8 +271,10 @@ public class Application {
                     option6(in);
                     break;
                 case 7:
+                    option7(in);
                     break;
                 case 8:
+                    option8(in);
                     break;
                 case 9:
                     break;
