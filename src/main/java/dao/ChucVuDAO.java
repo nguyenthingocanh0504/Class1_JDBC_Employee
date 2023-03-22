@@ -2,6 +2,7 @@ package dao;
 
 import connection.MyConnection;
 import model.ChucVu;
+import model.Employee;
 import model.NhanVien;
 
 import java.sql.Connection;
@@ -37,5 +38,28 @@ public class ChucVuDAO {
             e.printStackTrace();
         }
         return chucVuList;
+    }
+    public ChucVu getById(long id) {
+        try {
+            Connection conn = MyConnection.getConnection();
+            final String sql = "SELECT * FROM ChucVu WHERE MaCV = " + id;
+
+            Statement stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery(sql);
+            ChucVu e = null;
+            if (rs.next()) {
+                e = new ChucVu();
+                e.setMaCV(rs.getInt("MaCV"));
+                e.setTenCV(rs.getString("TenCV"));
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return e;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

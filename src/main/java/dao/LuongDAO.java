@@ -2,6 +2,7 @@ package dao;
 
 import connection.MyConnection;
 import model.ChucVu;
+import model.Employee;
 import model.Luong;
 
 import java.sql.Connection;
@@ -37,5 +38,30 @@ public class LuongDAO {
             e.printStackTrace();
         }
         return luongList;
+    }
+    public Luong getById(long id) {
+        try {
+            Connection conn = MyConnection.getConnection();
+            final String sql = "SELECT * FROM Luong WHERE BacLuong = " + id;
+
+            Statement stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery(sql);
+            Luong e = null;
+            if (rs.next()) {
+                e = new Luong();
+                e.setBacLuong(rs.getInt("BacLuong"));
+                e.setLuongCB(rs.getInt("LuongCB"));
+                e.setHsLuong(rs.getInt("HSLuong"));
+                e.setHsPhuCap(rs.getInt("HSPhuCap"));
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return e;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
