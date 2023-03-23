@@ -81,7 +81,8 @@ public class NhanVienDAO implements GenerateClass{
             e.printStackTrace();
         }
         return null;
-    }public void update(NhanVien e, String id) {
+    }
+    public void update(NhanVien e, String id) {
         NhanVien tmp = getById(id);
         if(tmp == null){
             System.out.println("Không tồn tại nhân viên có id = " + id);
@@ -106,6 +107,31 @@ public class NhanVienDAO implements GenerateClass{
             ex.printStackTrace();
         }
     }
+    public void update_employee_department(NhanVien e, String id) {
+        NhanVien tmp = getById(id);
+        if(tmp == null){
+            System.out.println("Không tồn tại nhân viên có id = " + id);
+            return;
+        }
+        final String sql = String.format("UPDATE NhanVien SET `MaPB`='%s' WHERE `MaNV`='%s' " ,
+                e.getMaPB(), id
+        );
+
+        System.out.println(sql);
+        try{
+            Connection conn = MyConnection.getConnection();
+            Statement stmt = conn.createStatement();
+            long rs = stmt.executeUpdate(sql);
+
+            if (rs == 0) {
+                System.out.println("Cập nhật thất bại");
+            }
+
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
     public void delete(NhanVien e, String id) {
         NhanVien tmp = getById(id);
         if(tmp == null){
@@ -113,6 +139,30 @@ public class NhanVienDAO implements GenerateClass{
             return;
         }
         final String sql = String.format("UPDATE NhanVien SET `TrangThai`='0' WHERE `MaNV`='%s' " , id);
+
+//        System.out.println(sql);
+        try{
+            Connection conn = MyConnection.getConnection();
+            Statement stmt = conn.createStatement();
+            long rs = stmt.executeUpdate(sql);
+
+            if (rs == 0) {
+                System.out.println("Xóa thất bại");
+            }
+
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void delete_employee_from_department(NhanVien e, String id) {
+        NhanVien tmp = getById(id);
+        if(tmp == null){
+            System.out.println("Không tồn tại nhân viên có id = " + id);
+            return;
+        }
+        final String sql = String.format("UPDATE NhanVien SET `MaPB`='0' WHERE `MaNV`='%s' " , id);
 
 //        System.out.println(sql);
         try{

@@ -213,11 +213,93 @@ public class Application {
     }
     private static void option8(Scanner in){
         NhanVien n=new NhanVien();
-        System.out.print("\tNhập mã nhân viên: ");
-        String maNV = in.nextLine();
+        System.out.print("\tNhập mã nhân viên muốn tìm: ");
+        String maNV=in.nextLine();
+        while(nhanVienDAO.getById(maNV)==null) {
+            System.out.print("\tMã nhân viên chưa tồn tại, vui lòng nhập lại mã NV: ");
+            maNV =in.nextLine();
+        }
         n.setMaNV(maNV);
 
         nhanVienDAO.delete(n,maNV);
+    }
+    private static void option9(Scanner in){
+        NhanVien n=new NhanVien();
+        System.out.print("\tNhập mã nhân viên muốn tìm: ");
+        String maNV=in.nextLine();
+        while(nhanVienDAO.getById(maNV)==null) {
+            System.out.print("\tMã nhân viên chưa tồn tại, vui lòng nhập lại mã NV: ");
+            maNV =in.nextLine();
+        }
+        n.setMaNV(maNV);
+
+        System.out.println(nhanVienDAO.getById(maNV));
+    }
+    private static void option10(Scanner in){
+        NhanVien n=new NhanVien();
+        System.out.print("\tNhập mã nhân viên: ");
+        String maNV=in.nextLine();
+        while(nhanVienDAO.getById(maNV)==null) {
+            System.out.print("\tMã nhân viên chưa tồn tại, vui lòng nhập lại mã NV: ");
+            maNV =in.nextLine();
+        }
+        n.setMaNV(maNV);
+
+        System.out.println("Chọn phòng ban: ");
+        List<PhongBan> phongBanList = phongBanDAO.getAll();
+        System.out.printf("\t\t%-20s %-20s \n","Mã phòng ban","Tên phòng ban");
+        for (int i = 0; i < phongBanList.size(); i++) {
+            System.out.printf("\t\t%-20d %-20s \n", phongBanList.get(i).getMaPB(), phongBanList.get(i).getTenPB());
+        }
+
+        System.out.println("\tNhập mã phòng ban: ");
+        int MaPB=Integer.parseInt(in.nextLine());
+        while (phongBanDAO.getById(MaPB)==null){
+            System.out.println("Mã phòng ban không hợp lệ, vui lòng nhập lại mã phòng ban: ");
+            MaPB=Integer.parseInt(in.nextLine());
+        }
+        n.setMaPB(MaPB);
+
+        nhanVienDAO.update_employee_department(n,maNV);
+    }
+    private static void option11(Scanner in){
+        NhanVien n=new NhanVien();
+        System.out.print("\tNhập mã nhân viên muốn tìm: ");
+        String maNV=in.nextLine();
+        while(nhanVienDAO.getById(maNV)==null) {
+            System.out.print("\tMã nhân viên chưa tồn tại, vui lòng nhập lại mã NV: ");
+            maNV =in.nextLine();
+        }
+        n.setMaNV(maNV);
+
+        nhanVienDAO.delete_employee_from_department(n,maNV);
+    }
+    private static void option12(Scanner in){
+        NhanVien n=new NhanVien();
+        System.out.print("\tNhập mã nhân viên: ");
+        String maNV=in.nextLine();
+        while(nhanVienDAO.getById(maNV)==null) {
+            System.out.print("\tMã nhân viên chưa tồn tại, vui lòng nhập lại mã NV: ");
+            maNV =in.nextLine();
+        }
+        n.setMaNV(maNV);
+
+        System.out.println("Chọn phòng ban: ");
+        List<PhongBan> phongBanList = phongBanDAO.getAll();
+        System.out.printf("\t\t%-20s %-20s \n","Mã phòng ban","Tên phòng ban");
+        for (int i = 0; i < phongBanList.size(); i++) {
+            System.out.printf("\t\t%-20d %-20s \n", phongBanList.get(i).getMaPB(), phongBanList.get(i).getTenPB());
+        }
+
+        System.out.println("\tNhập mã phòng ban: ");
+        int MaPB=Integer.parseInt(in.nextLine());
+        while (phongBanDAO.getById(MaPB)==null){
+            System.out.println("Mã phòng ban không hợp lệ, vui lòng nhập lại mã phòng ban: ");
+            MaPB=Integer.parseInt(in.nextLine());
+        }
+        n.setMaPB(MaPB);
+
+        nhanVienDAO.update_employee_department(n,maNV);
     }
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -277,10 +359,13 @@ public class Application {
                     option8(in);
                     break;
                 case 9:
+                    option9(in);
                     break;
                 case 10:
+                    option10(in);
                     break;
                 case 11:
+                    option11(in);
                     break;
                 case 12:
                     break;
