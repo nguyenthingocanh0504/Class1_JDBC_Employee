@@ -120,19 +120,19 @@ public class Application {
         n.setDanToc(in.nextLine());
         System.out.print("\tNhập quê quán: ");
         n.setQueQuan(in.nextLine());
-        System.out.println("Chọn phòng ban: ");
-        List<PhongBan> phongBanList = phongBanDAO.getAll();
-        System.out.printf("\t\t%-20s %-20s \n","Mã phòng ban","Tên phòng ban");
-        for (int i = 0; i < phongBanList.size(); i++) {
-            System.out.printf("\t\t%-20d %-20s \n", phongBanList.get(i).getMaPB(), phongBanList.get(i).getTenPB());
-        }
-        System.out.println("\tNhập mã phòng ban: ");
-        int MaPB=Integer.parseInt(in.nextLine());
-        while (phongBanDAO.getById(MaPB)==null){
-            System.out.println("Mã phòng ban không hợp lệ, vui lòng nhập lại mã phòng ban: ");
-            MaPB=Integer.parseInt(in.nextLine());
-        }
-        n.setMaPB(MaPB);
+//        System.out.println("Chọn phòng ban: ");
+//        List<PhongBan> phongBanList = phongBanDAO.getAll();
+//        System.out.printf("\t\t%-20s %-20s \n","Mã phòng ban","Tên phòng ban");
+//        for (int i = 0; i < phongBanList.size(); i++) {
+//            System.out.printf("\t\t%-20d %-20s \n", phongBanList.get(i).getMaPB(), phongBanList.get(i).getTenPB());
+//        }
+//        System.out.println("\tNhập mã phòng ban: ");
+//        int MaPB=Integer.parseInt(in.nextLine());
+//        while (phongBanDAO.getById(MaPB)==null){
+//            System.out.println("Mã phòng ban không hợp lệ, vui lòng nhập lại mã phòng ban: ");
+//            MaPB=Integer.parseInt(in.nextLine());
+//        }
+//        n.setMaPB(MaPB);
 
         System.out.println("Chọn trình độ học vấn: ");
         List<TrinhDoHocVan> trinhDoHocVanList = trinhDoHocVanDAO.getAll();

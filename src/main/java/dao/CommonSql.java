@@ -24,13 +24,13 @@ public class CommonSql {
         }else if(o instanceof PhongBan) {
             PhongBan phongBan = new PhongBan();
             phongBan = (PhongBan) o ;
-            excute_sql =  String.format(sql, phongBan.getTenPB(), phongBan.getSdtPB(), phongBan.getDiaChi(), 1);
+            excute_sql =  String.format(sql, phongBan.getTenPB(), phongBan.getSdtPB(), phongBan.getDiaChi(), phongBan.getTrangThai());
         }
         Connection connection = null;
         try {
             connection = MyConnection.getConnection();
             Statement stmt = connection.createStatement();
-            System.out.println("Chua dong connection");
+
             int rs = stmt.executeUpdate(excute_sql);
             if (rs == 0) {
                 System.out.println("Thêm thất bại!");

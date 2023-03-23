@@ -134,4 +134,5 @@ public class NhanVienDAO implements GenerateClass{
     public void insert(Object o) {
         CommonSql.common_insert(o, CommonSql.INSERT_NHANVIEN);
     }
+
 }
