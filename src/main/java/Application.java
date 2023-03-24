@@ -1,9 +1,10 @@
+import DTO.LuongNhanVienDTO;
 import Function.IsSoDienThoai;
 import dao.*;
 import model.*;
 
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import service.AuthenService;
 public class Application {
@@ -305,7 +306,29 @@ public class Application {
         nhanVienList.stream().filter(s->s.getQueQuan().equals("Ha Noi"))
                 .forEach(p-> System.out.println(p));
     }
-
+    private static void option14(){
+//        List<NhanVien> nhanVienList = nhanVienDAO.getAll();
+//        List<Luong> luongList = luongDAO.getAll();
+//        List<LuongNhanVienDTO> luongNhanVienDTOS = new ArrayList<>();
+//        nhanVienList.forEach(nhanVien -> {
+//            LuongNhanVienDTO luongNhanVienDTO = new LuongNhanVienDTO();
+//            luongNhanVienDTO.setMaNV(nhanVien.getMaNV());
+//            luongNhanVienDTO.setTenNV(nhanVien.getHoTen());
+//            int bacLuong = nhanVien.getBacLuong();
+//            luongList.forEach(luong -> {
+//                if(luong.getBacLuong() == bacLuong){
+//                    double luongThucLinh = luong.getLuongCB() * luong.getHsLuong() + luong.getLuongCB()* luong.getHsPhuCap();
+//                    luongNhanVienDTO.setLuongThucLinh(luongThucLinh);
+//                }
+//            });
+//            luongNhanVienDTOS.add(luongNhanVienDTO);
+//        });
+//        List<LuongNhanVienDTO> listSorted =  luongNhanVienDTOS.stream().sorted((a,b) -> (int) (a.getLuongThucLinh() - b.getLuongThucLinh())).collect(Collectors.toList());
+        List<LuongNhanVienDTO> luongNhanVienDTOS = nhanVienDAO.getSalaryEmployee();
+        luongNhanVienDTOS.forEach(luongNhanVienDTO -> {
+            System.out.println(luongNhanVienDTO.getMaNV() + "-" + luongNhanVienDTO.getTenNV() + "-" + String.format("%,.2f", luongNhanVienDTO.getLuongThucLinh()));
+        });
+    }
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         if(isLoginSuccess== false){
@@ -377,7 +400,7 @@ public class Application {
                 case 13:
                     break;
                 case 14:
-//                    option14(in);
+                    option14();
                     break;
                 case 15:
                     option15();

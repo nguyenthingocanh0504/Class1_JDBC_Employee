@@ -12,7 +12,7 @@ public class NhanVien {
     private long maTDHV;
     private int bacLuong;
     private int maCV;
-    private int trangThaiNV;
+    private int trangThaiNV = 1;
 
     public NhanVien() {
     }

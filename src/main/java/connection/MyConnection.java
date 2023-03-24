@@ -8,7 +8,7 @@ public final class MyConnection {
     // Tao ket noi den CSDL
 
     public static final String DB_USER = "root";
-    public static final String DB_PASSWORD = "05042000";
+    public static final String DB_PASSWORD = "220120";
     public static final String DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/quanlysanpham";
 
 

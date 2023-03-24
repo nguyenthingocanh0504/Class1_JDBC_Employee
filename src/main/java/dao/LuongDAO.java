@@ -25,8 +25,8 @@ public class LuongDAO {
                 Luong e = new Luong();
                 e.setBacLuong(rs.getInt("BacLuong"));
                 e.setLuongCB(rs.getInt("LuongCB"));
-                e.setHsLuong(rs.getInt("HSLuong"));
-                e.setHsPhuCap(rs.getInt("HSPhuCap"));
+                e.setHsLuong(rs.getDouble("HSLuong"));
+                e.setHsPhuCap(rs.getDouble("HSPhuCap"));
                 luongList.add(e);
             }
             rs.close();

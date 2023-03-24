@@ -1,5 +1,6 @@
 package dao;
 
+import DTO.LuongNhanVienDTO;
 import connection.MyConnection;
 import model.Luong;
 import model.NhanVien;
@@ -48,40 +49,22 @@ public class NhanVienDAO implements GenerateClass{
         }
         return nhanVienList;
     }
-    public static Double getSalaryEmployee() {
-        List<NhanVien> nhanVienList = new ArrayList<>();
-        List<Luong> luongList=new ArrayList<>();
+    public static List<LuongNhanVienDTO> getSalaryEmployee() {
+        List<LuongNhanVienDTO> luongNhanVienDTOS = new ArrayList<>();
         try {
             Connection conn = MyConnection.getConnection();
-            final String sql = "select LuongCB*HSLuong+LuongCB*HSPhuCap from Luong l inner join nhanvien n on n.BacLuong=l.BacLuong group by n.MaNV";
+            final String sql = "select MaNV, HoTen, LuongCB*HSLuong+LuongCB*HSPhuCap as LuongThucLinh from Luong l inner join nhanvien n on n.BacLuong=l.BacLuong order by luongThucLinh";
 
             Statement stmt = conn.createStatement();
 
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                NhanVien e = new NhanVien();
-                Luong l = new Luong();
-//                e.setMaNV(rs.getString("MaNV"));
-//                e.setHoTen(rs.getString("HoTen"));
-//                e.setSdt(rs.getString("SoDienThoai"));
-//                e.setGioiTinh(rs.getString("GioiTinh"));
-//                e.setNgaySinh(rs.getString("NgaySinh"));
-//                e.setDanToc(rs.getString("DanToc"));
-//                e.setQueQuan(rs.getString("QueQuan"));
-//                e.setMaPB(rs.getInt("MaPB"));
-//                e.setMaTDHV(rs.getInt("MaTrinhDoHocVan"));
-//                e.setBacLuong(rs.getInt("BacLuong"));
-//                e.setMaCV(rs.getInt("MaCV"));
-//                e.setTrangThaiNV(rs.getInt("TrangThai"));
-//
-//                l.setBacLuong(rs.getInt("BacLuong"));
-//                l.setLuongCB(rs.getInt("LuongCB"));
-//                l.setHsLuong(rs.getInt("HSLuong"));
-//                l.setHsPhuCap(rs.getInt("HSPhuCap"));
-//
-//                luongList.add(l);
-//                nhanVienList.add(e);
+                LuongNhanVienDTO e = new LuongNhanVienDTO();
+                e.setMaNV(rs.getString("MaNV"));
+                e.setTenNV(rs.getString("HoTen"));
+                e.setLuongThucLinh(rs.getDouble("LuongThucLinh"));
+                luongNhanVienDTOS.add(e);
 
             }
             rs.close();
@@ -91,7 +74,7 @@ public class NhanVienDAO implements GenerateClass{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return getSalaryEmployee();
+        return luongNhanVienDTOS;
     }
     public NhanVien getById(String id) {
         try {
