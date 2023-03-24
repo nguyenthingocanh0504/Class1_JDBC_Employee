@@ -76,6 +76,32 @@ public class NhanVienDAO implements GenerateClass{
         }
         return luongNhanVienDTOS;
     }
+    public LuongNhanVienDTO getSalaryEmployeeByID(String id) {
+        LuongNhanVienDTO luongNhanVienDTO = new LuongNhanVienDTO();
+        try {
+            Connection conn = MyConnection.getConnection();
+            final String sql = "select MaNV, HoTen, LuongCB*HSLuong+LuongCB*HSPhuCap as LuongThucLinh from Luong l inner join nhanvien n on n.BacLuong=l.BacLuong where `MaNV`="+id;
+
+            Statement stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+
+                luongNhanVienDTO.setMaNV(rs.getString("MaNV"));
+                luongNhanVienDTO.setTenNV(rs.getString("HoTen"));
+                luongNhanVienDTO.setLuongThucLinh(rs.getDouble("LuongThucLinh"));
+
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return luongNhanVienDTO;
+    }
     public NhanVien getById(String id) {
         try {
             Connection conn = MyConnection.getConnection();

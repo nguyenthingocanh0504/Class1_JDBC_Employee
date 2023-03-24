@@ -1,4 +1,5 @@
 import DTO.LuongNhanVienDTO;
+import Function.IncomeTax;
 import Function.IsSoDienThoai;
 import dao.*;
 import model.*;
@@ -30,11 +31,11 @@ public class Application {
         System.out.println("11. Xóa thông tin nhân viên ra khỏi phòng ban");
         System.out.println("12. Chuyển vị trí phòng ban cho 1 nhân viên");
         System.out.println("13. Tính thuế thu nhập cá nhân cho 1 nhân viên (theo mã NV)");
-        System.out.println("14. Sắp xếp danh sách nhân viên theo mức lương thực lĩnh");
+        System.out.println("14. Sắp xếp danh sách nhân viên theo mức lương");
         System.out.println("15. Lấy ra những nhân viên có quê quán ở Hà Nội");
-        System.out.println("16. Lấy ra 5 nhân viên có bậc lương cao nhất.");
-        System.out.println("17. Thoát");
+        System.out.println("16. Thoát");
     }
+
     private static void option1() {
         List<PhongBan> phongBanList = phongBanDAO.getAll();
         System.out.printf("%-20s %-20s %-20s %-20s", "Mã phòng ban", "Tên phòng ban", "Số điện thoại", "Địa chỉ");
@@ -46,11 +47,11 @@ public class Application {
     }
     private static void option2() {
         List<NhanVien> nhanVienList = nhanVienDAO.getAll();
-        System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-20s", "Mã nhân viên", "Họ tên", "Số điện thoại", "Giới tính", "Ngày sinh", "Dân tộc", "Quê quán");
+        System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-20s %-20s", "Mã nhân viên", "Họ tên", "Số điện thoại", "Giới tính", "Ngày sinh", "Dân tộc", "Quê quán","Mã chức vụ");
         System.out.println();
         for (int i = 0; i < nhanVienList.size(); i++) {
             NhanVien n = nhanVienList.get(i);
-            System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-20s\n", n.getMaNV(), n.getHoTen(), n.getSdt(), n.getGioiTinh(),n.getNgaySinh(),n.getDanToc(),n.getQueQuan());
+            System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-20s %-20s\n", n.getMaNV(), n.getHoTen(), n.getSdt(), n.getGioiTinh(),n.getNgaySinh(),n.getDanToc(),n.getQueQuan(),n.getMaCV());
         };
     }
     private static void option3(Scanner in){
@@ -306,6 +307,19 @@ public class Application {
         nhanVienList.stream().filter(s->s.getQueQuan().equals("Ha Noi"))
                 .forEach(p-> System.out.println(p));
     }
+    private static void option13(Scanner in){
+        NhanVien n=new NhanVien();
+        System.out.print("\tNhập mã nhân viên: ");
+        String maNV=in.nextLine();
+        while(nhanVienDAO.getById(maNV)==null) {
+            System.out.print("\tMã nhân viên chưa tồn tại, vui lòng nhập lại mã NV: ");
+            maNV =in.nextLine();
+        }
+        n.setMaNV(maNV);
+        System.out.println("\tNhập số người phụ thuộc: ");
+        int number=Integer.parseInt(in.nextLine());
+        System.out.println("Thuế của nhân viên là: "+ IncomeTax.getIncomeTax(maNV,number));
+    }
     private static void option14(){
 //        List<NhanVien> nhanVienList = nhanVienDAO.getAll();
 //        List<Luong> luongList = luongDAO.getAll();
@@ -324,10 +338,12 @@ public class Application {
 //            luongNhanVienDTOS.add(luongNhanVienDTO);
 //        });
 //        List<LuongNhanVienDTO> listSorted =  luongNhanVienDTOS.stream().sorted((a,b) -> (int) (a.getLuongThucLinh() - b.getLuongThucLinh())).collect(Collectors.toList());
+        System.out.printf("%-20s %-20s %-20s", "Mã nhân viên", "Tên nhân viên", "Lương");
         List<LuongNhanVienDTO> luongNhanVienDTOS = nhanVienDAO.getSalaryEmployee();
         luongNhanVienDTOS.forEach(luongNhanVienDTO -> {
-            System.out.println(luongNhanVienDTO.getMaNV() + "-" + luongNhanVienDTO.getTenNV() + "-" + String.format("%,.2f", luongNhanVienDTO.getLuongThucLinh()));
+            System.out.printf("\n%-20s %-20s %-20s",luongNhanVienDTO.getMaNV(),luongNhanVienDTO.getTenNV(),String.format("%,.1f", luongNhanVienDTO.getLuongThucLinh()));
         });
+        System.out.println();
     }
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -396,8 +412,10 @@ public class Application {
                     option11(in);
                     break;
                 case 12:
+                    option12(in);
                     break;
                 case 13:
+                    option13(in);
                     break;
                 case 14:
                     option14();
@@ -406,8 +424,6 @@ public class Application {
                     option15();
                     break;
                 case 16:
-                    break;
-                case 17:
                     break;
             }
 
