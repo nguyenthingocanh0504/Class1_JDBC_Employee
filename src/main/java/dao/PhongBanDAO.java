@@ -1,7 +1,6 @@
 package dao;
 
 import connection.MyConnection;
-import model.Employee;
 import model.PhongBan;
 
 import java.sql.Connection;

@@ -2,7 +2,6 @@ import Function.IsSoDienThoai;
 import dao.*;
 import model.*;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -301,6 +300,12 @@ public class Application {
 
         nhanVienDAO.update_employee_department(n,maNV);
     }
+    private static void option15(){
+        List<NhanVien> nhanVienList = nhanVienDAO.getAll();
+        nhanVienList.stream().filter(s->s.getQueQuan().equals("Ha Noi"))
+                .forEach(p-> System.out.println(p));
+    }
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         if(isLoginSuccess== false){
@@ -372,8 +377,10 @@ public class Application {
                 case 13:
                     break;
                 case 14:
+//                    option14(in);
                     break;
                 case 15:
+                    option15();
                     break;
                 case 16:
                     break;

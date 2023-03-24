@@ -1,8 +1,6 @@
 package dao;
 
 import connection.MyConnection;
-import model.Employee;
-import model.Luong;
 import model.TrinhDoHocVan;
 
 import java.sql.Connection;

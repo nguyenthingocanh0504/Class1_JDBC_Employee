@@ -2,8 +2,6 @@ package dao;
 
 import connection.MyConnection;
 import model.ChucVu;
-import model.Employee;
-import model.NhanVien;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

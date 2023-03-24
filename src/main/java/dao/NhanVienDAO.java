@@ -1,9 +1,8 @@
 package dao;
 
 import connection.MyConnection;
-import model.Employee;
+import model.Luong;
 import model.NhanVien;
-import model.PhongBan;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -48,6 +47,51 @@ public class NhanVienDAO implements GenerateClass{
             e.printStackTrace();
         }
         return nhanVienList;
+    }
+    public static Double getSalaryEmployee() {
+        List<NhanVien> nhanVienList = new ArrayList<>();
+        List<Luong> luongList=new ArrayList<>();
+        try {
+            Connection conn = MyConnection.getConnection();
+            final String sql = "select LuongCB*HSLuong+LuongCB*HSPhuCap from Luong l inner join nhanvien n on n.BacLuong=l.BacLuong group by n.MaNV";
+
+            Statement stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                NhanVien e = new NhanVien();
+                Luong l = new Luong();
+//                e.setMaNV(rs.getString("MaNV"));
+//                e.setHoTen(rs.getString("HoTen"));
+//                e.setSdt(rs.getString("SoDienThoai"));
+//                e.setGioiTinh(rs.getString("GioiTinh"));
+//                e.setNgaySinh(rs.getString("NgaySinh"));
+//                e.setDanToc(rs.getString("DanToc"));
+//                e.setQueQuan(rs.getString("QueQuan"));
+//                e.setMaPB(rs.getInt("MaPB"));
+//                e.setMaTDHV(rs.getInt("MaTrinhDoHocVan"));
+//                e.setBacLuong(rs.getInt("BacLuong"));
+//                e.setMaCV(rs.getInt("MaCV"));
+//                e.setTrangThaiNV(rs.getInt("TrangThai"));
+//
+//                l.setBacLuong(rs.getInt("BacLuong"));
+//                l.setLuongCB(rs.getInt("LuongCB"));
+//                l.setHsLuong(rs.getInt("HSLuong"));
+//                l.setHsPhuCap(rs.getInt("HSPhuCap"));
+//
+//                luongList.add(l);
+//                nhanVienList.add(e);
+
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getSalaryEmployee();
     }
     public NhanVien getById(String id) {
         try {
@@ -180,9 +224,11 @@ public class NhanVienDAO implements GenerateClass{
         }
     }
 
+
     @Override
     public void insert(Object o) {
         CommonSql.common_insert(o, CommonSql.INSERT_NHANVIEN);
     }
+
 
 }
