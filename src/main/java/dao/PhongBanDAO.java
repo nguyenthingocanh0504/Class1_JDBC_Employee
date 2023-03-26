@@ -102,9 +102,10 @@ public class PhongBanDAO implements GenerateClass {
             System.out.println("Không tồn tại phòng ban có id = " + id);
             return;
         }
-        final String sql = String.format("UPDATE PhongBan SET `TrangThai`='0' WHERE `MaPB`='%d' " , id);
+        final String sql = String.format("UPDATE PhongBan SET `TrangThai`='0' WHERE `MaPB`='%d' " ,
+                id);
 
-//        System.out.println(sql);
+        System.out.println(sql);
         try{
             Connection conn = MyConnection.getConnection();
             Statement stmt = conn.createStatement();

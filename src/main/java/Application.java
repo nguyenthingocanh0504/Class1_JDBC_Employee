@@ -26,7 +26,7 @@ public class Application {
         System.out.println("6. Thêm mới thông tin 1 Nhân Viên");
         System.out.println("7. Cập nhật thông tin 1 nhân viên (theo mã NV)");
         System.out.println("8. Xóa thông tin 1 nhân viên (theo mã NV)");
-        System.out.println("9. Tìm kiếm thông tin 1 nhân viên ( theo mã, theo tên,...)");
+        System.out.println("9. Tìm kiếm thông tin 1 nhân viên theo mã");
         System.out.println("10. Thêm thông tin nhân viên vào 1 phòng ban");
         System.out.println("11. Xóa thông tin nhân viên ra khỏi phòng ban");
         System.out.println("12. Chuyển vị trí phòng ban cho 1 nhân viên");
@@ -58,8 +58,16 @@ public class Application {
         PhongBan p = new PhongBan();
         System.out.print("\tNhập tên phòng ban: ");
         p.setTenPB(in.nextLine());
+
         System.out.print("\tNhập số điện thoại: ");
-        p.setSdtPB(in.nextLine());
+        String sdt = in.nextLine();
+        IsSoDienThoai isSoDienThoai=new IsSoDienThoai();
+        while (isSoDienThoai.isSoDienThoai(sdt)==false||sdt==null||sdt.length()==0) {
+            System.out.print("\t\tNhập số điện thoại không đúng định dạng, vui lòng nhập lại sdt: ");
+            sdt = in.nextLine();
+        }
+        p.setSdtPB(sdt);
+
         System.out.print("\tNhập địa chỉ: ");
         p.setDiaChi(in.nextLine());
         p.setTrangThai(1);
@@ -70,14 +78,26 @@ public class Application {
     private static void option4(Scanner in){
         PhongBan p=new PhongBan();
         System.out.print("\tNhập mã phòng ban: ");
-        int MaPB = Integer.parseInt(in.nextLine());
+        int MaPB=Integer.parseInt(in.nextLine());
+        while(phongBanDAO.getById(MaPB)==null) {
+            System.out.print("\tMã phòng ban chưa tồn tại, vui lòng nhập lại mã phòng ban: ");
+            MaPB =Integer.parseInt(in.nextLine());
+        }
         p.setMaPB(MaPB);
+
         System.out.print("\tNhập tên phòng ban: ");
         String TenPB = in.nextLine();
         p.setTenPB(TenPB);
+
         System.out.print("\tNhập số điện thoại: ");
-        String sdt=in.nextLine();
+        String sdt = in.nextLine();
+        IsSoDienThoai isSoDienThoai=new IsSoDienThoai();
+        while (isSoDienThoai.isSoDienThoai(sdt)==false) {
+            System.out.print("\t\tNhập số điện thoại không đúng định dạng, vui lòng nhập lại sdt: ");
+            sdt = in.nextLine();
+        }
         p.setSdtPB(sdt);
+
         System.out.print("\tNhập địa chỉ: ");
         String diaChi=in.nextLine();
         p.setDiaChi(diaChi);
@@ -87,10 +107,14 @@ public class Application {
     private static void option5(Scanner in){
         PhongBan p=new PhongBan();
         System.out.print("\tNhập mã phòng ban: ");
-        int MaPB = Integer.parseInt(in.nextLine());
+        int MaPB=Integer.parseInt(in.nextLine());
+        while(phongBanDAO.getById(MaPB)==null) {
+            System.out.print("\tMã phòng ban chưa tồn tại, vui lòng nhập lại mã phòng ban: ");
+            MaPB =Integer.parseInt(in.nextLine());
+        }
         p.setMaPB(MaPB);
 
-        phongBanDAO.update(p,MaPB);
+        phongBanDAO.delete(p,MaPB);
     }
 
     private static void option6(Scanner in){
@@ -103,24 +127,53 @@ public class Application {
         }
         n.setMaNV(maNV);
         System.out.print("\tNhập tên nhân viên: ");
-        n.setHoTen(in.nextLine());
+        String HoTen = in.nextLine();
+        while (HoTen==null|| HoTen.length() == 0){
+            System.out.println("Tên nhân viên không được bỏ trống, vui lòng nhập lại tên nhân viên: ");
+            HoTen = in.nextLine();
+        }
+        n.setHoTen(HoTen);
+
         System.out.print("\tNhập số điện thoại: ");
         String sdt = in.nextLine();
         IsSoDienThoai isSoDienThoai=new IsSoDienThoai();
-        while (isSoDienThoai.isSoDienThoai(sdt)==false) {
+        while (isSoDienThoai.isSoDienThoai(sdt)==false||sdt==null||sdt.length()==0) {
             System.out.print("\t\tNhập số điện thoại không đúng định dạng, vui lòng nhập lại sdt: ");
             sdt = in.nextLine();
         }
         n.setSdt(sdt);
 
         System.out.print("\tNhập giới tính: ");
-        n.setGioiTinh(in.nextLine());
+        String GioiTinh = in.nextLine();
+        while (GioiTinh==null|| GioiTinh.length() == 0){
+            System.out.println("Giới tính không được bỏ trống, vui lòng nhập lại giới tính: ");
+            GioiTinh = in.nextLine();
+        }
+        n.setGioiTinh(GioiTinh);
+
         System.out.print("\tNhập ngày sinh: ");
-        n.setNgaySinh(in.nextLine());
+        String NgaySinh = in.nextLine();
+        while (NgaySinh==null|| NgaySinh.length() == 0){
+            System.out.println("Ngày sinh không được bỏ trống, vui lòng nhập lại ngày sinh: ");
+            NgaySinh = in.nextLine();
+        }
+        n.setNgaySinh(NgaySinh);
+
         System.out.print("\tNhập dân tộc: ");
-        n.setDanToc(in.nextLine());
+        String DanToc = in.nextLine();
+        while (DanToc==null|| DanToc.length() == 0){
+            System.out.println("Dân tộc không được bỏ trống, vui lòng nhập lại dân tộc: ");
+            DanToc = in.nextLine();
+        }
+        n.setDanToc(DanToc);
+
         System.out.print("\tNhập quê quán: ");
-        n.setQueQuan(in.nextLine());
+        String QueQuan = in.nextLine();
+        while (QueQuan==null|| QueQuan.length() == 0){
+            System.out.println("Quê quán không được bỏ trống, vui lòng nhập lại quê quán: ");
+            QueQuan = in.nextLine();
+        }
+        n.setQueQuan(QueQuan);
 //        System.out.println("Chọn phòng ban: ");
 //        List<PhongBan> phongBanList = phongBanDAO.getAll();
 //        System.out.printf("\t\t%-20s %-20s \n","Mã phòng ban","Tên phòng ban");
@@ -192,7 +245,13 @@ public class Application {
         n.setMaNV(maNV);
 
         System.out.print("\tNhập tên nhân viên: ");
-        n.setHoTen(in.nextLine());
+        String HoTen = in.nextLine();
+        while (HoTen==null|| HoTen.length() == 0){
+            System.out.println("Tên nhân viên không được bỏ trống, vui lòng nhập lại tên nhân viên: ");
+            HoTen = in.nextLine();
+        }
+        n.setHoTen(HoTen);
+
         System.out.print("\tNhập số điện thoại: ");
         String sdt = in.nextLine();
         IsSoDienThoai isSoDienThoai=new IsSoDienThoai();
@@ -203,13 +262,37 @@ public class Application {
         n.setSdt(sdt);
 
         System.out.print("\tNhập giới tính: ");
-        n.setGioiTinh(in.nextLine());
+        String GioiTinh = in.nextLine();
+        while (GioiTinh==null|| GioiTinh.length() == 0){
+            System.out.println("Giới tính không được bỏ trống, vui lòng nhập lại giới tính: ");
+            GioiTinh = in.nextLine();
+        }
+        n.setGioiTinh(GioiTinh);
+
         System.out.print("\tNhập ngày sinh: ");
-        n.setNgaySinh(in.nextLine());
+        String NgaySinh = in.nextLine();
+        while (NgaySinh==null|| NgaySinh.length() == 0){
+            System.out.println("Ngày sinh không được bỏ trống, vui lòng nhập lại ngày sinh: ");
+            NgaySinh = in.nextLine();
+        }
+        n.setNgaySinh(NgaySinh);
+
         System.out.print("\tNhập dân tộc: ");
-        n.setDanToc(in.nextLine());
+        String DanToc = in.nextLine();
+        while (DanToc==null|| DanToc.length() == 0){
+            System.out.println("Dân tộc không được bỏ trống, vui lòng nhập lại dân tộc: ");
+            DanToc = in.nextLine();
+        }
+        n.setDanToc(DanToc);
+
         System.out.print("\tNhập quê quán: ");
-        n.setQueQuan(in.nextLine());
+        String QueQuan = in.nextLine();
+        while (QueQuan==null|| QueQuan.length() == 0){
+            System.out.println("Quê quán không được bỏ trống, vui lòng nhập lại quê quán: ");
+            QueQuan = in.nextLine();
+        }
+        n.setQueQuan(QueQuan);
+
         nhanVienDAO.update(n,maNV);
     }
     private static void option8(Scanner in){
@@ -372,8 +455,12 @@ public class Application {
             mainMenu();
             System.out.print("Nhập lựa chọn: ");
             option = Integer.parseInt(in.nextLine());
-            // Làm thêm phàn try-catch khi người dùng nhập lỗi
-            if (option < 1 || option > 19) {
+            try {
+                option = Integer.parseInt(in.nextLine());
+            } catch (Exception e) {
+                System.out.println("Không có chức năng!");
+            }
+            if (option < 1 || option > 16) {
                 System.out.println("Vui lòng nhập lại!");
                 continue;
             }

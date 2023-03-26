@@ -80,7 +80,7 @@ public class NhanVienDAO implements GenerateClass{
         LuongNhanVienDTO luongNhanVienDTO = new LuongNhanVienDTO();
         try {
             Connection conn = MyConnection.getConnection();
-            final String sql = "select MaNV, HoTen, LuongCB*HSLuong+LuongCB*HSPhuCap as LuongThucLinh from Luong l inner join nhanvien n on n.BacLuong=l.BacLuong where `MaNV`="+id;
+            final String sql = "select MaNV, HoTen, LuongCB*HSLuong+LuongCB*HSPhuCap as LuongThucLinh from Luong l inner join nhanvien n on n.BacLuong=l.BacLuong where `MaNV` LIKE '%" + id + "%'";
 
             Statement stmt = conn.createStatement();
 
@@ -105,7 +105,7 @@ public class NhanVienDAO implements GenerateClass{
     public NhanVien getById(String id) {
         try {
             Connection conn = MyConnection.getConnection();
-            final String sql = "SELECT * FROM NhanVien WHERE MaNV = " + id;
+            final String sql = "SELECT * FROM NhanVien WHERE MaNV LIKE '%" + id + "%'";
 
             Statement stmt = conn.createStatement();
 
@@ -141,7 +141,7 @@ public class NhanVienDAO implements GenerateClass{
             System.out.println("Không tồn tại nhân viên có id = " + id);
             return;
         }
-        final String sql = String.format("UPDATE NhanVien SET `HoTen`='%s',`SoDienThoai`='%s',`GioiTinh`='%s',`NgaySinh`='%s',`DanToc`='%s',`QueQuan`='%s' WHERE `MaNV`='%s' " ,
+        final String sql = String.format("UPDATE NhanVien SET `HoTen`='%s',`SoDienThoai`='%s',`GioiTinh`='%s',`NgaySinh`='%s',`DanToc`='%s',`QueQuan`='%s' WHERE `MaNV` LIKE '%s' " ,
                 e.getHoTen(), e.getSdt(), e.getGioiTinh(), e.getNgaySinh(), e.getDanToc(), e.getQueQuan(), id
         );
 
@@ -166,7 +166,7 @@ public class NhanVienDAO implements GenerateClass{
             System.out.println("Không tồn tại nhân viên có id = " + id);
             return;
         }
-        final String sql = String.format("UPDATE NhanVien SET `MaPB`='%s' WHERE `MaNV`='%s' " ,
+        final String sql = String.format("UPDATE NhanVien SET `MaPB`='%s' WHERE `MaNV` LIKE ='%s' " ,
                 e.getMaPB(), id
         );
 
@@ -191,7 +191,7 @@ public class NhanVienDAO implements GenerateClass{
             System.out.println("Không tồn tại nhân viên có id = " + id);
             return;
         }
-        final String sql = String.format("UPDATE NhanVien SET `TrangThai`='0' WHERE `MaNV`='%s' " , id);
+        final String sql = String.format("UPDATE NhanVien SET `TrangThai`='0' WHERE `MaNV` LIKE '%s' " , id);
 
 //        System.out.println(sql);
         try{
@@ -215,7 +215,7 @@ public class NhanVienDAO implements GenerateClass{
             System.out.println("Không tồn tại nhân viên có id = " + id);
             return;
         }
-        final String sql = String.format("UPDATE NhanVien SET `MaPB`='0' WHERE `MaNV`='%s' " , id);
+        final String sql = String.format("UPDATE NhanVien SET `MaPB`='0' WHERE `MaNV` LIKE '%s' " , id);
 
 //        System.out.println(sql);
         try{
