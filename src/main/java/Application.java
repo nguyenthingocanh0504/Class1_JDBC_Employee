@@ -47,11 +47,11 @@ public class Application {
     }
     private static void option2() {
         List<NhanVien> nhanVienList = nhanVienDAO.getAll();
-        System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-20s %-20s", "Mã nhân viên", "Họ tên", "Số điện thoại", "Giới tính", "Ngày sinh", "Dân tộc", "Quê quán","Mã chức vụ");
+        System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-20s", "Mã nhân viên", "Họ tên", "Số điện thoại", "Giới tính", "Ngày sinh", "Dân tộc", "Quê quán");
         System.out.println();
         for (int i = 0; i < nhanVienList.size(); i++) {
             NhanVien n = nhanVienList.get(i);
-            System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-20s %-20s\n", n.getMaNV(), n.getHoTen(), n.getSdt(), n.getGioiTinh(),n.getNgaySinh(),n.getDanToc(),n.getQueQuan(),n.getMaCV());
+            System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-20s\n", n.getMaNV(), n.getHoTen(), n.getSdt(), n.getGioiTinh(),n.getNgaySinh(),n.getDanToc(),n.getQueQuan());
         };
     }
     private static void option3(Scanner in){
@@ -348,7 +348,7 @@ public class Application {
     }
     private static void option11(Scanner in){
         NhanVien n=new NhanVien();
-        System.out.print("\tNhập mã nhân viên muốn tìm: ");
+        System.out.print("\tNhập mã nhân viên muốn xóa: ");
         String maNV=in.nextLine();
         while(nhanVienDAO.getById(maNV)==null) {
             System.out.print("\tMã nhân viên chưa tồn tại, vui lòng nhập lại mã NV: ");
@@ -399,9 +399,9 @@ public class Application {
             maNV =in.nextLine();
         }
         n.setMaNV(maNV);
-        System.out.println("\tNhập số người phụ thuộc: ");
+        System.out.print("\tNhập số người phụ thuộc: ");
         int number=Integer.parseInt(in.nextLine());
-        System.out.println("Thuế của nhân viên là: "+ IncomeTax.getIncomeTax(maNV,number));
+        System.out.println("====>Thuế của nhân viên là: "+ IncomeTax.getIncomeTax(maNV,number));
     }
     private static void option14(){
 //        List<NhanVien> nhanVienList = nhanVienDAO.getAll();
@@ -454,7 +454,6 @@ public class Application {
         do {
             mainMenu();
             System.out.print("Nhập lựa chọn: ");
-            option = Integer.parseInt(in.nextLine());
             try {
                 option = Integer.parseInt(in.nextLine());
             } catch (Exception e) {
@@ -466,48 +465,63 @@ public class Application {
             }
             switch (option) {
                 case 1:
+                    System.out.println("1. Hiển thị danh sách các phòng ban");
                     option1();
                     break;
                 case 2:
+                    System.out.println("2. Hiển thị danh sách toàn bộ nhân viên");
                     option2();
                     break;
                 case 3:
+                    System.out.println("3. Thêm mới thông tin 1 phòng ban");
                     option3(in);
                     break;
                 case 4:
+                    System.out.println("4. Cập nhật thông tin phòng ban (theo mã phòng ban)");
                     option4(in);
                     break;
                 case 5:
+                    System.out.println("5. Xóa thông tin phòng ban (theo mã PB)");
                     option5(in);
                     break;
                 case 6:
+                    System.out.println("6. Thêm mới thông tin 1 Nhân Viên");
                     option6(in);
                     break;
                 case 7:
+                    System.out.println("7. Cập nhật thông tin 1 nhân viên (theo mã NV)");
                     option7(in);
                     break;
                 case 8:
+                    System.out.println("8. Xóa thông tin 1 nhân viên (theo mã NV)");
                     option8(in);
                     break;
                 case 9:
+                    System.out.println("9. Tìm kiếm thông tin 1 nhân viên theo mã");
                     option9(in);
                     break;
                 case 10:
+                    System.out.println("10. Thêm thông tin nhân viên vào 1 phòng ban");
                     option10(in);
                     break;
                 case 11:
+                    System.out.println("11. Xóa thông tin nhân viên ra khỏi phòng ban");
                     option11(in);
                     break;
                 case 12:
+                    System.out.println("12. Chuyển vị trí phòng ban cho 1 nhân viên");
                     option12(in);
                     break;
                 case 13:
+                    System.out.println("13. Tính thuế thu nhập cá nhân cho 1 nhân viên (theo mã NV)");
                     option13(in);
                     break;
                 case 14:
+                    System.out.println("14. Sắp xếp danh sách nhân viên theo mức lương");
                     option14();
                     break;
                 case 15:
+                    System.out.println("15. Lấy ra những nhân viên có quê quán ở Hà Nội");
                     option15();
                     break;
                 case 16:

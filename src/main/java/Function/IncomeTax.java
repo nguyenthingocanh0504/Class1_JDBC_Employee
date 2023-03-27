@@ -35,7 +35,6 @@ public class IncomeTax {
         if (TNTT > 80000000) {
             incomeTax = TNTT * 35 / 100.00;
         }
-
         return incomeTax;
     }
 }
